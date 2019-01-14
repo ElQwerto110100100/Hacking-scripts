@@ -9,7 +9,6 @@ RUN echo "source ~/peda/peda.py" >> ~/.gdbinit
 #install word list for bruteforce cracking
 RUN mkdir usr/share/wordlists
 RUN wget http://downloads.skullsecurity.org/passwords/rockyou.txt.bz2 -O usr/share/wordlists
-RUN tar xvjf -C usr/share/wordlists/rockyou.txt.bz2
 
 #installing my github stuff and commands
 RUN mkdir home/github
