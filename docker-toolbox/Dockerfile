@@ -4,6 +4,7 @@ From kalilinux/kali-linux-docker
 RUN apt-get update -y && apt-get upgrade -y && apt-get dist-upgrade -y 
 RUN apt-get install ncat -y && apt-get update && apt-get install metasploit-framework -y
 RUN apt-get install hydra -y
+RUN apt-get install gdb -y
 RUN git clone https://github.com/longld/peda.git ~/peda
 RUN echo "source ~/peda/peda.py" >> ~/.gdbinit
 RUN apt-get install sqlmap -y
