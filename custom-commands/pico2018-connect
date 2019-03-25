@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo connecting to picoctf 2018 shell
+
+ssh ElQwerto@2018shell1.picoctf.com
