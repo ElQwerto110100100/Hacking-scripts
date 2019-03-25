@@ -205,13 +205,12 @@ int main(int argc, char *argv[]) {
       }
 
       if(cash > ONE_BILLION) {
-	printf("*** Current Balance: $%lu ***\n", cash);
-	if (wins >= HOTSTREAK) {
-	  puts("Wow, I can't believe you did it.. You deserve this flag!");
-	  print_flag();
-	  exit(0);
-	}
-	else {
+	       printf("*** Current Balance: $%lu ***\n", cash);
+	       if (wins >= HOTSTREAK) {
+	          puts("Wow, I can't believe you did it.. You deserve this flag!");
+	          print_flag();
+	          exit(0);
+	    }	else {
 	  puts("Wait a second... You're not even on a hotstreak! Get out of here cheater!");
 	  exit(-1);
 	}

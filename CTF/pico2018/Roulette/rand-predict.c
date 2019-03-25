@@ -81,3 +81,13 @@ int main(int argc, char *argv[]) {
   }
   return 1;
 }
+
+/*
+ we know the seed of the rand() function, because the get_rand() func returns the seed and stores that value as your start cash value
+ next bug is getting one billion. since the cash value is sotred in Long but it comparese the MAX value which means its unisigned.
+ therefor a interger over flow bug is avaliable so LONG_MAX = 2147483647 but if we put LONG_MAX + 1 it will flow over to 0.
+ therefore if we want a higher value whhat we can do is LONG_MAX + 2000000 do this when you lose so the cash value will be reduced to 0 then overflow,
+ into one_billion. if you did it on a win the bet would be * 2 then you have the reverse happen it ends up in the negative.
+
+ TODO make blog post
+*/
