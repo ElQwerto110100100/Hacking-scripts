@@ -44,12 +44,53 @@ long get_long() {
 
 long get_rand() {
   long seed;
-  seed = get_long();
+  FILE *f = fopen("/dev/urandom", "r");
+  fread(&seed, sizeof(seed), 1, f);
+  fclose(f);
   seed = seed % 5000;
   if (seed < 0) seed = seed * -1;
   srand(seed);
   return seed;
 }
+
+long get_bet() {
+  while(1) {
+    puts("How much will you wager?");
+    printf("Current Balance: $%lu \t Current Wins: %lu\n", cash, wins);
+    long bet = get_long();
+    if(bet <= cash) {
+      return bet;
+    } else {
+      puts("You can't bet more than you have!");
+    }
+  }
+}
+
+long get_choice() {
+  while (1) {
+    printf("Choose a number (1-%d)\n", ROULETTE_SIZE);
+    long choice = get_long();
+    if (1 <= choice && choice <= ROULETTE_SIZE) {
+      return choice;
+    } else {
+      puts("Please enter a valid choice.");
+    }
+  }
+}
+
+int print_flag() {
+  char flag[48];
+  FILE *file;
+  file = fopen("flag.txt", "r");
+  if (file == NULL) {
+    printf("Failed to open the flag file\n");
+    return -1;
+  }
+  fgets(flag, sizeof(flag), file);
+  printf("%s", flag);
+  return 0;
+}
+
 const char *win_msgs[NUM_WIN_MSGS] = {
   "Wow.. Nice One!",
   "You chose correct!",
@@ -84,7 +125,7 @@ void spin_roulette(long spin) {
   puts("");
   printf("Roulette  :  ");
   int i, j;
-  int s = 100;
+  int s = 12500;
   for (i = 0; i < ROULETTE_SPINS; i++) {
     n = printf("%d", (i%ROULETTE_SIZE)+1);
     usleep(s);
@@ -123,19 +164,38 @@ void play_roulette(long choice, long bet) {
 
   printf("Spinning the Roulette for a chance to win $%lu!\n", 2*bet);
   long spin = (rand() % ROULETTE_SIZE)+1;
-  printf("this is the spin variable %lu",spin);
+
   spin_roulette(spin);
+
+  if (spin == choice) {
+    cash += 2*bet;
+    puts(win_msgs[rand()%NUM_WIN_MSGS]);
+    wins += 1;
+  }
+  else {
+    puts(lose_msgs1[rand()%NUM_LOSE_MSGS]);
+    puts(lose_msgs2[rand()%NUM_LOSE_MSGS]);
+  }
+  puts("");
 }
 
 int main(int argc, char *argv[]) {
   setvbuf(stdout, NULL, _IONBF, 0);
-  printf("\n input seed: \n");
+
   cash = get_rand();
 
-  long bet = 1;
-  long choice = 1;
+  puts("Welcome to ONLINE ROULETTE!");
+  printf("Here, have $%ld to start on the house! You'll lose it all anyways >:)\n", cash);
+  puts("");
+
+  long bet;
+  long choice;
   while(cash > 0) {
-    
+      bet = get_bet();
+      cash -= bet;
+      choice = get_choice();
+      puts("");
+
       play_roulette(choice, bet);
 
       if (wins >= MAX_WINS) {
@@ -148,7 +208,7 @@ int main(int argc, char *argv[]) {
 	printf("*** Current Balance: $%lu ***\n", cash);
 	if (wins >= HOTSTREAK) {
 	  puts("Wow, I can't believe you did it.. You deserve this flag!");
-	  puts("YOU got the flag");
+	  print_flag();
 	  exit(0);
 	}
 	else {
