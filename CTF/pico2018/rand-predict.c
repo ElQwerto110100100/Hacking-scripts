@@ -72,6 +72,7 @@ const char *lose_msgs2[NUM_LOSE_MSGS] = {
 };
 
 int main(int argc, char *argv[]) {
+  puts("rember: win msg = 1 rand(); lose msg = 2 rand() uses");
   long seed = get_long();
   srand(seed);
   for (int i = 0; i< 20; i++) {
