@@ -6,6 +6,8 @@ RUN apt-get install ncat -y && apt-get update && apt-get install metasploit-fram
 RUN apt-get install hydra -y
 RUN apt-get install gdb -y
 RUN git clone https://github.com/longld/peda.git ~/peda
+RUN git clone https://github.com/radare/radare2.git home
+RUN home/sys/install.sh
 RUN echo "source ~/peda/peda.py" >> ~/.gdbinit
 RUN apt-get install sqlmap -y
 
